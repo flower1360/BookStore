@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>com.xj.servlet.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>BookManagerServlet</servlet-name>
+        <servlet-class>com.xj.servlet.BookManagerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookManagerServlet</servlet-name>
+        <url-pattern>/manager/BookManagerServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>BookClientServlet</servlet-name>
+        <servlet-class>com.xj.servlet.BookClientServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookClientServlet</servlet-name>
+        <url-pattern>/client/BookClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <url-pattern>/code.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.xj.servlet.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/CartServlet</url-pattern>
+    </servlet-mapping>
+</web-app>
