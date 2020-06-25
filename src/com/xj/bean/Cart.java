@@ -71,6 +71,8 @@ public class Cart implements Serializable {
         int m_count = 1;
         try {
             m_count = Integer.parseInt(count);
+            //禁止改为负数
+            m_count = m_count>0?m_count:1;
         } catch (NumberFormatException e) {
             System.out.println("updateCount:m_count:异常"+bookId);
         }
