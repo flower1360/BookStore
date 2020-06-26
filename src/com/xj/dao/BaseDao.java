@@ -76,4 +76,22 @@ public class BaseDao<T> {
         }
         return query;
     }
+
+    /**
+     * 批处理方法
+     * @return
+     */
+    public int batch(String sql, Object[][] params){
+        Connection connection = JDBCUtils.getConnection();
+        try {
+            //object[][]
+            //一维代表sql的执行次数,二维代表存放当前sql要执行的可变参数
+            int[] batch = runner.batch(connection, sql, params);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            JDBCUtils.releaseConnection(connection);
+        }
+        return 0;
+    }
 }

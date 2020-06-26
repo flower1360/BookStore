@@ -40,4 +40,6 @@ public interface BookDao {
      * @return
      */
     public int getTotalCountByPrice(double minPrice, double maxPrice);
+    
+    public void updateStockAndSales(Integer bookId, Integer stock, Integer sales );
 }
