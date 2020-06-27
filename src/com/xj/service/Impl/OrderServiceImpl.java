@@ -51,15 +51,17 @@ public class OrderServiceImpl implements OrderService {
         ois.saveItems(orderItems);
         //5.修改库存
         for(CartItem cartItem: allItems){
-            //获取详细信息
+            //获取详细信息:图书的信息应该从数据库得到
             Book book = cartItem.getBook();
-            //修改库存和销量
+            Book one = bs.getOne(book);
+            //修改库存和销量--(应修改实时的库存,而不是保存在购物车中的)
             int count = cartItem.getCount();
-            book.setStock(book.getStock()-count);
-            book.setSales(book.getSales()+count);
-            bs.update(book);
+            one.setStock(one.getStock()-count);
+            one.setSales(one.getSales()+count);
+            bs.update(one);
         }
-        
+        //6.保存后应清空购物车
+        cart.clear();
         return orderId;
     }
 

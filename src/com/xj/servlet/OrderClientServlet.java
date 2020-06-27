@@ -25,18 +25,14 @@ public class OrderClientServlet extends BaseServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         
+        //2.登录则结算
+        Cart cart = WebUtils.getCart(request);
         
-        if(user != null){
-            //2.登录则结算
-            Cart cart = WebUtils.getCart(request);
-            String orderId = os.checkout(cart, user);
-            session.setAttribute("orderId",orderId);
-            response.sendRedirect(request.getContextPath()+"/pages/cart/checkout.jsp");
-        }else {
-            //3.否则返回登录界面
-            request.setAttribute("msg","此操作需要登录,请先登录");
-            request.getRequestDispatcher("/pages/user/login.jsp").forward(request,response);
-        }
+        String orderId = os.checkout(cart, user);
+        session.setAttribute("orderId",orderId);
+        
+        response.sendRedirect(request.getContextPath()+"/pages/cart/checkout.jsp");
+        
     }
 
     protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
