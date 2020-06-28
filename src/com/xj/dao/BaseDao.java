@@ -30,9 +30,7 @@ public class BaseDao<T> {
         try {
             query = runner.query(connection, sql, new BeanHandler<>(type), params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            JDBCUtils.releaseConnection(connection);
+            throw new RuntimeException("发生异常");
         }
         return query;
     }
@@ -43,9 +41,7 @@ public class BaseDao<T> {
         try {
             query = runner.query(connection, sql, new BeanListHandler<>(type), params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            JDBCUtils.releaseConnection(connection);
+            throw new RuntimeException("发生异常");
         }
         return query;
     }
@@ -57,9 +53,7 @@ public class BaseDao<T> {
         try {
             count = runner.update(connection,sql,params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            JDBCUtils.releaseConnection(connection);
+            throw new RuntimeException("发生异常");
         }
         return count;
     }
@@ -70,9 +64,7 @@ public class BaseDao<T> {
         try {
             query = runner.query(connection, sql, new ScalarHandler(), params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            JDBCUtils.releaseConnection(connection);
+            throw new RuntimeException("发生异常");
         }
         return query;
     }
@@ -88,9 +80,7 @@ public class BaseDao<T> {
             //一维代表sql的执行次数,二维代表存放当前sql要执行的可变参数
             int[] batch = runner.batch(connection, sql, params);
         } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            JDBCUtils.releaseConnection(connection);
+            throw new RuntimeException("发生异常");
         }
         return 0;
     }

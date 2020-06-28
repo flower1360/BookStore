@@ -4,6 +4,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 获取数据库连接的工具类
@@ -15,7 +17,9 @@ public class JDBCUtils {
 
     private static ComboPooledDataSource dataSource = new ComboPooledDataSource(
             "book_devoloper");
-
+    
+    private static Map<Long,Connection> conns = new HashMap<>();
+    
     private JDBCUtils() {
     }
 
@@ -26,28 +30,33 @@ public class JDBCUtils {
      *         如果获取数据库连接失败，则返回null
      */
     public static Connection getConnection() {
-        Connection connection = null;
-
-            // 从c3p0中获取数据库连接
-        try {
-            connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        long id = Thread.currentThread().getId();
+        System.out.println("jdbcutils中的线程号:"+id);
+        //获取当前线程的链接
+        Connection connection = conns.get(id);
+        if(connection == null){
+            try {
+                connection = dataSource.getConnection();
+                //把链接保存在map中
+                conns.put(id,connection);
+                //connection.setAutoCommit(false);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
         return connection;
     }
 
     /**
      * 释放数据库连接
      */
-    public static void releaseConnection(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public static void releaseConnection() {
+        Connection connection = getConnection();
+        try {
+            connection.close();
+            conns.remove(Thread.currentThread().getId());
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

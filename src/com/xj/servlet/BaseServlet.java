@@ -21,6 +21,7 @@ public class BaseServlet extends HttpServlet {
             method1.invoke(this, request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("BaseServlet异常");
         }
     }
 

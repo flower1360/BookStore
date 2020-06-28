@@ -70,4 +70,13 @@
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/OrderClientServlet</url-pattern>
     </filter-mapping>
+    
+    <filter>
+        <filter-name>TransactionFilter</filter-name>
+        <filter-class>com.xj.filter.TransactionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>TransactionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
