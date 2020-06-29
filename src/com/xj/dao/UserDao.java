@@ -8,4 +8,6 @@ public interface UserDao {
 
     //注册,保存用户
     public boolean registUser(User user);
+
+    public User getUserByUserName(User user);
 }

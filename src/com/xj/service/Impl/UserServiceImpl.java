@@ -16,4 +16,9 @@ public class UserServiceImpl implements UserService {
     public boolean regist(User user) {
         return ud.registUser(user);
     }
+
+    @Override
+    public boolean checkName(User user) {
+        return ud.getUserByUserName(user) == null;
+    }
 }

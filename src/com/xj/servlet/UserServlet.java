@@ -67,6 +67,14 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    protected void checkName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User user = WebUtils.paramToBean2(request, new User());
+        if(us.checkName(user)){
+            response.getWriter().write("该用户名可以注册");
+        }else {
+            response.getWriter().write("该用户名已被占用");
+        }
+    }
 
     /**
      * 用户登出操作

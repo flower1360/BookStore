@@ -37,6 +37,7 @@ public class OrderClientServlet extends BaseServlet {
 
     protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
+        
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         

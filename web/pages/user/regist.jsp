@@ -3,56 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <title>尚硅谷会员注册页面</title>
-	<%@include file="/include/base.jsp"%>
+<%@include file="/include/base.jsp"%>
 <style type="text/css">
 	.login_form{
 		height:420px;
 		margin-top: 25px;
 	}
-	
 </style>
-	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
-	<script type="text/javascript">
-		$(function () {
-			$("#codeJpg").click(function () {
-				var url = "code.jpg?"+Math.random();
-				$(this).prop("src",url);
-			});
-			//验证用户名
-			$("#sub_btn").click(function () {
-				//验证成功提交表单
-				var username = $(".itxt[name='username']").val();
-				var password = $(".itxt[name='password']").val();
-				var repwd = $(".itxt[name='repwd']").val();
-				var email = $(".itxt[name='email']").val();
-				var code = $(".itxt[name='code']").val();
-				//创建正则表达式
-				var regUserName = /^[a-z0-9_-]{5,16}$/;
-				var regPwd = /^[a-z0-9_-]{5,16}$/;
-				var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]){2,6}$/;
-				if(!regUserName.test(username)){
-					$(".errorMsg").text("用户名不符合规范");
-					return false;
-				}
-				if(!regPwd.test(password)){
-					$(".errorMsg").text("密码不符合规范");
-					return false;
-				}
-				if(password != repwd){
-					$(".errorMsg").text("请输入相同的密码");
-					return false;
-				}
-				if(!regEmail.test(email)){
-					$(".errorMsg").text("邮箱不符合规范");
-					return false;
-				}
-				if(code == ""){
-					$(".errorMsg").text("请输入验证码");
-					return false;
-				}
-			});
+<script type="text/javascript">
+	$(function () {
+		$("#codeJpg").click(function () {
+			var url = "code.jpg?"+Math.random();
+			$(this).prop("src",url);
 		});
-	</script>
+		$(".itxt[name='username']").blur(function () {
+			var username = $(".itxt[name='username']").val();
+			var regUserName = /^[a-z0-9_-]{5,16}$/;
+			if(regUserName.test(username)){
+				$.get("UserServlet?method=checkName&username="+username,function (data) {
+					$(".errorMsg").text(data);
+				});
+			}else {
+				$(".errorMsg").text("用户名不符合规范");
+				return false;
+			}
+			
+		});
+		//验证用户名
+		$("#sub_btn").click(function () {
+			//验证成功提交表单
+			var username = $(".itxt[name='username']").val();
+			var password = $(".itxt[name='password']").val();
+			var repwd = $(".itxt[name='repwd']").val();
+			var email = $(".itxt[name='email']").val();
+			var code = $(".itxt[name='code']").val();
+			//创建正则表达式
+			var regUserName = /^[a-z0-9_-]{5,16}$/;
+			var regPwd = /^[a-z0-9_-]{5,16}$/;
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]){2,6}$/;
+			if(!regUserName.test(username)){
+				$(".errorMsg").text("用户名不符合规范");
+				return false;
+			}
+			if(!regPwd.test(password)){
+				$(".errorMsg").text("密码不符合规范");
+				return false;
+			}
+			if(password != repwd){
+				$(".errorMsg").text("请输入相同的密码");
+				return false;
+			}
+			if(!regEmail.test(email)){
+				$(".errorMsg").text("邮箱不符合规范");
+				return false;
+			}
+			if(code == ""){
+				$(".errorMsg").text("请输入验证码");
+				return false;
+			}
+		});
+	});
+</script>
 </head>
 <body>
 		<div id="login_header">

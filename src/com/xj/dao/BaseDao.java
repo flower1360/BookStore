@@ -53,7 +53,8 @@ public class BaseDao<T> {
         try {
             count = runner.update(connection,sql,params);
         } catch (SQLException e) {
-            throw new RuntimeException("发生异常");
+            System.out.println("异常");
+            //throw new RuntimeException("发生异常");
         }
         return count;
     }
