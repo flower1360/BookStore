@@ -27,10 +27,15 @@ public class CartServlet extends BaseServlet {
         Book one = bs.getOne(book);
         cart.addBookToCart(one);
         
-        session.setAttribute("title",one.getTitle());
+        int totalCount = cart.getTotalCount();
+        String title = one.getTitle();
+        String s = "{\"totalCount\":"+totalCount+",\"title\":\""+title+"\"}";
+        System.out.println(s);
+        response.getWriter().write(s);
+        //session.setAttribute("title",one.getTitle());
         
-        String referer = request.getHeader("referer");
-        response.sendRedirect(referer);
+//        String referer = request.getHeader("referer");
+//        response.sendRedirect(referer);
     }
 
     protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

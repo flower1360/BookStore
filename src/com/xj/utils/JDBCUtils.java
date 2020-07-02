@@ -31,7 +31,7 @@ public class JDBCUtils {
      */
     public static Connection getConnection() {
         long id = Thread.currentThread().getId();
-        System.out.println("jdbcutils中的线程号:"+id);
+        //System.out.println("jdbcutils中的线程号:"+id);
         //获取当前线程的链接
         Connection connection = conns.get(id);
         if(connection == null){

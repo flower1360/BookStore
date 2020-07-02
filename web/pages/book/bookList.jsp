@@ -2,9 +2,21 @@
 
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>书城首页</title>
-    <%@include file="/include/base.jsp" %>
+<meta charset="UTF-8">
+<title>书城首页</title>
+<%@include file="/include/base.jsp" %>
+<script type="text/javascript">
+    $(function () {
+        $(".addBook").click(function () {
+            var id = $(this).attr("bookId");
+            $.getJSON("CartServlet?method=add&id="+id,function (data) {
+                $("#count").text("您的购物车中有"+data.totalCount+"件商品");
+                $("#msg").text("您刚刚将"+data.title+"加入到了购物车中");
+            });
+            return false;
+        });
+    });
+</script>
 </head>
 <body>
 <div id="header">
@@ -24,20 +36,11 @@
             </form>
         </div>
         <div style="text-align: center">
-            <span>
-                您的购物车中有
-                <c:out value="${cart.totalCount}" default="0"></c:out>
-                件商品
+            <span id="count">
+                您的购物车中有${cart.totalCount}件商品
+                <%--<c:out value="${cart.totalCount}" default="0"></c:out>--%>
             </span>
-            <c:if test="${empty title}">
-                <div><span>&nbsp;</span></div>
-            </c:if>
-            <c:if test="${!empty title}">
-                <div>
-                    您刚刚将<span style="color: red">${title}</span>加入到了购物车中
-                </div>
-                <c:remove var="title" scope="session"></c:remove>
-            </c:if>
+            <div><span id="msg" style="color: #39987c">&nbsp;</span></div>
         </div>
         <c:forEach var="book" items="${page.pageData}">
             <div class="b_list">
@@ -66,7 +69,7 @@
                         <span class="sp2">${book.stock}</span>
                     </div>
                     <div class="book_add">
-                        <a href="CartServlet?method=add&id=${book.id}" style="color: blue">加入购物车</a>
+                        <a class="addBook" href="" style="color: blue" bookId="${book.id}">加入购物车</a>
                     </div>
                 </div>
             </div>
