@@ -15,7 +15,13 @@
 			$(".changeInput").change(function () {
 				var count = $(this).val();
 				var id = $(this).attr("updateId");//获取要修改的id
-				location.href = "CartServlet?method=update&count="+count+"&id="+id;
+				$.getJSON("CartServlet?method=update&count="+count+"&id="+id,function (data) {
+					$("#price_"+id).text(data.totalPrice);	
+					$("#count").text(data.totalCount);	
+					$("#money").text(data.totalMoney);	
+				});
+				return false;
+				// location.href = "CartServlet?method=update&count="+count+"&id="+id;
 			});
 			$(".clearBtn").click(function () {
 				return confirm("确认清空购物车?");
@@ -54,22 +60,18 @@
 							<input updateId="${item.book.id}" class="changeInput" type="text" style="width: 40px" value="${item.count}">
 						</td>
 						<td>${item.book.price}</td>
-						<td>${item.totalPrice}</td>
+						<td id="price_${item.book.id}">${item.totalPrice}</td>
 						<td><a class="delBtn" href="CartServlet?method=delete&bookId=${item.book.id}">删除</a></td>
 					</tr>
 				</c:forEach>
 			</table>
 			<div class="cart_info">
-				<span class="cart_span">购物车中共有<span class="b_count">${cart.totalCount}</span>件商品</span>
-				<span class="cart_span">总金额<span class="b_price">${cart.totalMoney}</span>元</span>
+				<span class="cart_span">购物车中共有<span id="count" class="b_count">${cart.totalCount}</span>件商品</span>
+				<span class="cart_span">总金额<span id="money" class="b_price">${cart.totalMoney}</span>元</span>
 				<span class="cart_span"><a class="clearBtn" href="CartServlet?method=clear">清空购物车</a></span>
 				<span class="cart_span"><a href="OrderClientServlet?method=checkout">去结账</a></span>
 			</div>
 		</c:if>
-		
-		
-		
-	
 	</div>
 	
 	<div id="bottom">

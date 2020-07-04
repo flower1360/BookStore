@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Cart implements Serializable {
+    
     private Map<Integer,CartItem> items = new LinkedHashMap<>();
     
-
     public Map<Integer, CartItem> getItems() {
         return items;
     }
@@ -35,6 +35,11 @@ public class Cart implements Serializable {
         //返回map中所有的值
         Collection<CartItem> values = items.values();
         return new ArrayList<>(values);
+    }
+    //获取单个购物项
+    public CartItem getItemById(String id){
+        int i = Integer.parseInt(id);
+        return items.get(i);
     }
     
     //*************定义操作购物车的其他方法***************//

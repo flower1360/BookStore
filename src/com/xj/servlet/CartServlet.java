@@ -2,6 +2,7 @@ package com.xj.servlet;
 
 import com.xj.bean.Book;
 import com.xj.bean.Cart;
+import com.xj.bean.CartItem;
 import com.xj.service.BookService;
 import com.xj.service.Impl.BookServiceImpl;
 import com.xj.utils.WebUtils;
@@ -29,9 +30,8 @@ public class CartServlet extends BaseServlet {
         
         int totalCount = cart.getTotalCount();
         String title = one.getTitle();
-        String s = "{\"totalCount\":"+totalCount+",\"title\":\""+title+"\"}";
-        System.out.println(s);
-        response.getWriter().write(s);
+        String data = "{\"totalCount\":"+totalCount+",\"title\":\""+title+"\"}";
+        response.getWriter().write(data);
         //session.setAttribute("title",one.getTitle());
         
 //        String referer = request.getHeader("referer");
@@ -57,9 +57,13 @@ public class CartServlet extends BaseServlet {
         Cart cart = WebUtils.getCart(request);
 
         cart.updateCount(id,count);
-        
-        String referer = request.getHeader("referer");
-        response.sendRedirect(referer);
+        CartItem item = cart.getItemById(id);
+        String data = "{\"totalPrice\":"+item.getTotalPrice()+
+                ",\"totalCount\":"+cart.getTotalCount()+
+                ",\"totalMoney\":"+cart.getTotalMoney()+"}";
+        response.getWriter().write(data);
+//        String referer = request.getHeader("referer");
+//        response.sendRedirect(referer);
     }
 
     protected void clear(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
